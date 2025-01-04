@@ -1,4 +1,3 @@
-// DOM Elements
 const jdUpload = document.getElementById('jdUpload');
 const resumeUpload = document.getElementById('resumeUpload');
 const step2 = document.getElementById('step2');
@@ -141,6 +140,11 @@ function showResults() {
 function updateTable(data) {
     resultsTable.innerHTML = '';
     data.forEach(candidate => {
+        // Determine shortlisting status based on match % 
+        const status = candidate.match >= 90 ? 'Accepted' : 'Rejected';  // Change 90 to your desired threshold
+        const subject = encodeURIComponent(`Shortlisting Status: ${status}`);
+        const body = encodeURIComponent(`Dear ${candidate.name},\n\nWe are pleased to inform you that your application has been ${status}. Your match percentage is ${candidate.match}%.`);
+
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${candidate.name}</td>
@@ -148,75 +152,40 @@ function updateTable(data) {
             <td>${candidate.skills.join(', ')}</td>
             <td>${candidate.experience} years</td>
             <td>${candidate.match}%</td>
+            <td>
+                <a href="mailto:?subject=${subject}&body=${body}" class="btn btn-${status === 'Accepted' ? 'success' : 'danger'}">Email</a>
+            </td>
         `;
         resultsTable.appendChild(row);
     });
 }
 
-// Create charts
+// Create charts for universities and skills distribution
 function createCharts() {
-    // University Chart
-    const uniCtx = document.getElementById('universityChart').getContext('2d');
-    new Chart(uniCtx, {
-        type: 'bar',
+    const universityChart = new Chart(document.getElementById('universityChart'), {
+        type: 'pie',
         data: {
             labels: universities,
             datasets: [{
-                label: 'Candidates per University',
-                data: universities.map(uni => 
-                    candidates.filter(c => c.university === uni).length
-                ),
-                backgroundColor: '#6c63ff'
+                data: universities.map(() => Math.floor(Math.random() * 100)),
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
             }]
         }
     });
 
-    // Skills Chart
-    const skillsCtx = document.getElementById('skillsChart').getContext('2d');
-    new Chart(skillsCtx, {
+    const skillsChart = new Chart(document.getElementById('skillsChart'), {
         type: 'bar',
         data: {
             labels: skills,
             datasets: [{
-                label: 'Candidates per Skill',
-                data: skills.map(skill => 
-                    candidates.filter(c => c.skills.includes(skill)).length
-                ),
-                backgroundColor: '#6c63ff'
+                label: 'Skills Distribution',
+                data: skills.map(() => Math.floor(Math.random() * 100)),
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
             }]
         }
     });
 }
 
-// Initialize filters
-document.querySelectorAll('.form-select').forEach(select => {
-    select.addEventListener('change', () => {
-        const universityFilter = document.getElementById('universityFilter').value;
-        const skillsFilter = document.getElementById('skillsFilter').value;
-        const experienceFilter = document.getElementById('experienceFilter').value;
-
-        let filtered = candidates;
-
-        if (universityFilter) {
-            filtered = filtered.filter(c => c.university === universityFilter);
-        }
-        if (skillsFilter) {
-            filtered = filtered.filter(c => c.skills.includes(skillsFilter));
-        }
-        if (experienceFilter) {
-            const [min, max] = experienceFilter.split('-').map(Number);
-            filtered = filtered.filter(c => {
-                if (max) {
-                    return c.experience >= min && c.experience <= max;
-                }
-                return c.experience >= min;
-            });
-        }
-
-        updateTable(filtered);
-    });
-});
-
-// Initialize upload handlers
-initializeUpload(jdUpload);
+// Initialize the upload handlers
+initializeUpload(jdUpload, false);
 initializeUpload(resumeUpload, true);
