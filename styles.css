@@ -1,0 +1,181 @@
+.upload-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    width: 100%; /* Occupy full width of its container */
+    height: 120px; /* Reduced height */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+}
+
+.upload-box:hover {
+    border-color: #6c63ff;
+    background-color: rgba(108, 99, 255, 0.1);
+}
+
+.upload-section .col-md-6 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.upload-item {
+    flex: 1; /* Ensures equal width for both upload boxes */
+    text-align: center;
+}
+
+h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.upload-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px; /* Add space between upload boxes */
+}
+
+.upload-box.dragover {
+    border-color: #6c63ff;
+    background-color: rgba(108, 99, 255, 0.1);
+}
+
+.upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stats-card {
+    transition: transform 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+}
+
+.stats-card .card-text {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #6c63ff;
+}
+
+.filters {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.form-select {
+    border-color: #dee2e6;
+}
+
+.form-select:focus {
+    border-color: #6c63ff;
+    box-shadow: 0 0 0 0.25rem rgba(108, 99, 255, 0.25);
+}
+
+.table {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.processing-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #6c63ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+
+/* Ensure cards take up equal space and have consistent sizes */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Flex container for the charts */
+.charts-container {
+    display: flex;
+    justify-content: space-between; /* Ensure the charts are spaced evenly */
+    gap: 20px; /* Optional: Adds some gap between the charts */
+    flex-wrap: wrap; /* Ensures the charts wrap on smaller screens */
+}
+
+/* Ensure each chart item takes equal width */
+.chart-item {
+    flex: 0 0 48%; /* Each chart takes 48% of the container width */
+    margin-bottom: 15px; /* Adds spacing below each chart */
+}
+
+/* Ensure canvas fills the chart container */
+canvas {
+    width: 100% !important; /* Ensure canvas takes the full width of its container */
+    height: 300px !important; /* Fixed height for consistency */
+}
+
+/* Responsive behavior for smaller screens */
+@media (max-width: 768px) {
+    .chart-item {
+        flex: 0 0 100%; /* Stacks the charts vertically on smaller screens */
+        max-width: 100%;
+    }
+}
+
+
+/* Styling for the card body */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Text styling for card title */
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Add spacing for charts */
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
